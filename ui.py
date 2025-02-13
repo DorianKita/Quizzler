@@ -32,6 +32,8 @@ class QuizInterface:
         self.window.mainloop()
 
     def get_next_question(self):
+        self.true.config(state="active")
+        self.false.config(state="active")
         self.canvas.config(background='white')
         self.canvas.itemconfig(self.text, fill='black')
         if self.quiz_brain.still_has_questions():
@@ -54,9 +56,13 @@ class QuizInterface:
         if is_right:
             self.canvas.config(background='green')
             self.canvas.itemconfig(self.text, fill='white')
+            self.true.config(state="disabled")
+            self.false.config(state="disabled")
 
         else:
             self.canvas.config(background='red')
             self.canvas.itemconfig(self.text, fill='white')
+            self.true.config(state="disabled")
+            self.false.config(state="disabled")
 
-        self.window.after(ms=1000, func=self.get_next_question)
+        self.timer = self.window.after(ms=1000, func=self.get_next_question)
